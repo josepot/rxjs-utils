@@ -1,6 +1,14 @@
 {
   "version": "0.1.0",
-  "repository": "github:josepot/rxjs-utils",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josepot/rxjs-utils.git"
+  },
+  "description": "Just a bunch of custom RxJS operators and helpers that I use in some of my projects.",
+  "bugs": {
+    "url": "https://github.com/josepot/rxjs-utils/issues"
+  },
+  "homepage": "https://github.com/josepot/rxjs-utils#readme",
   "license": "MIT",
   "main": "dist/index.js",
   "typings": "dist/index.d.ts",
