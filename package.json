@@ -1,5 +1,5 @@
 {
-  "version": "0.4.0",
+  "version": "0.5.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/josepot/rxjs-utils.git"
@@ -40,11 +40,11 @@
   "author": "Josep M Sobrepere",
   "module": "dist/rxjs-utils.esm.js",
   "devDependencies": {
-    "@types/jest": "^25.1.1",
-    "husky": "^4.2.1",
-    "rxjs": "^6.5.4",
-    "tsdx": "^0.12.3",
-    "tslib": "^1.10.0",
-    "typescript": "^3.7.5"
+    "@types/jest": "^25.2.2",
+    "husky": "^4.2.5",
+    "rxjs": "^6.5.5",
+    "tsdx": "^0.13.2",
+    "tslib": "^2.0.0",
+    "typescript": "^3.9.2"
   }
 }
