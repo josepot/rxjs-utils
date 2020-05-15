@@ -8,5 +8,6 @@ export { default as scanWithStartingValue } from './scanWithStartingValue';
 export { default as filterNonFalsy } from './filterNonFalsy';
 export { default as plug } from './plug';
 export { default as mergeWhileActive } from './mergeWhileActive';
+export * from './mergeWithReducers';
 
 export type ObservableType<T> = T extends Observable<infer R> ? R : never;

@@ -1,5 +1,6 @@
 {
-  "version": "0.5.1",
+  "name": "@josepot/rxjs-utils",
+  "version": "0.6.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/josepot/rxjs-utils.git"
@@ -36,7 +37,6 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
-  "name": "@josepot/rxjs-utils",
   "author": "Josep M Sobrepere",
   "module": "dist/rxjs-utils.esm.js",
   "devDependencies": {
