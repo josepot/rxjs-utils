@@ -9,6 +9,7 @@ export { default as filterNonFalsy } from './filterNonFalsy';
 export { default as plug } from './plug';
 export { default as mergeWhileActive } from './mergeWhileActive';
 export { default as mapDistinct } from './mapDistinct';
+export { default as publishSelf } from './publishSelf';
 export * from './mergeWithReducers';
 
 export type ObservableType<T> = T extends Observable<infer R> ? R : never;
