@@ -5,17 +5,22 @@ const mirror = <T>(
   creator: () => Observable<T>,
   enhancer?: (source: Observable<T>) => Observable<T>
 ): [Observable<T>, Observable<T>] => {
-  const mirrored$ = new Subject<T>();
+  let mirrored$ = new Subject<T>();
   const done$ = new Subject();
   const result$ = defer(creator).pipe(
     publish(multicasted$ => {
-      multicasted$.pipe(takeUntil(done$), delay(0)).subscribe(mirrored$);
+      multicasted$
+        .pipe(takeUntil(done$), delay(0))
+        .subscribe(mirrored$)
+        .add(() => {
+          mirrored$ = new Subject();
+        });
       return multicasted$;
     }),
     finalize(() => done$.next())
   );
 
-  return [enhancer ? enhancer(result$) : result$, mirrored$.asObservable()];
+  return [enhancer ? enhancer(result$) : result$, defer(() => mirrored$)];
 };
 
 export default mirror;
