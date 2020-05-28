@@ -1,6 +1,6 @@
 {
   "name": "@josepot/rxjs-utils",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/josepot/rxjs-utils.git"
