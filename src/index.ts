@@ -9,6 +9,7 @@ export { default as filterNonFalsy } from './filterNonFalsy';
 export { default as mergeWhileActive } from './mergeWhileActive';
 export { default as mapDistinct } from './mapDistinct';
 export { default as recursiveObservable } from './recursive-observable';
+export { default as groupInMap } from './group-in-map';
 export * from './mergeWithReducers';
 
 export type ObservableType<T> = T extends Observable<infer R> ? R : never;
