@@ -1,7 +1,9 @@
-import { Observable, Subscription } from 'rxjs';
+import { from, Observable, Subscription, ObservableInput } from 'rxjs';
 import { toArray } from 'rxjs/operators';
 
-export default (nConcurrent = 1) => <T>(source$: Observable<Observable<T>>) =>
+export default (nConcurrent = 1) => <T>(
+  source$: Observable<ObservableInput<T>>
+) =>
   new Observable<T>(subscriber => {
     const queue = new Map<number, Observable<T>>();
     const innerSubscriptions = new Map<number, Subscription>();
@@ -42,7 +44,7 @@ export default (nConcurrent = 1) => <T>(source$: Observable<Observable<T>>) =>
     return source$
       .subscribe(inner$ => {
         const idx = nextIdx++;
-        queue.set(idx, inner$);
+        queue.set(idx, from(inner$));
         if (innerSubscriptions.size < nConcurrent) {
           pop();
         }
