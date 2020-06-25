@@ -1,9 +1,8 @@
 import { ObservableInput, Observable } from 'rxjs';
-import { mapTo } from 'rxjs/operators';
-import concurrentConcatAll from './concurrentConcatAll';
+import sortedMergeMap from './concurrentConcatMap';
 
 export default <Input, Output>(
   output: ObservableInput<Output>,
   nConcurrent = 1
 ) => (source$: Observable<Input>): Observable<Output> =>
-  source$.pipe(mapTo(output), concurrentConcatAll(nConcurrent));
+  source$.pipe(sortedMergeMap(() => output, nConcurrent));
