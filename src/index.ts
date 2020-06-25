@@ -12,6 +12,7 @@ export { default as recursiveObservable } from './recursive-observable';
 export { default as groupInMap } from './group-in-map';
 export { default as concurrentConcatAll } from './concurrentConcatAll';
 export { default as concurrentConcatMap } from './concurrentConcatMap';
+export { default as concurrentConcatMapTo } from './concurrentConcatMapTo';
 export * from './mergeWithReducers';
 
 export type ObservableType<T> = T extends Observable<infer R> ? R : never;
