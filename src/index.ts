@@ -10,6 +10,7 @@ export { default as mergeWhileActive } from './mergeWhileActive';
 export { default as mapDistinct } from './mapDistinct';
 export { default as recursiveObservable } from './recursive-observable';
 export { default as groupInMap } from './group-in-map';
+export { default as concurrentConcatAll } from './concurrentConcatAll';
 export * from './mergeWithReducers';
 
 export type ObservableType<T> = T extends Observable<infer R> ? R : never;
