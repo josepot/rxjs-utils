@@ -1,10 +1,11 @@
-import { defer, ObservableInput, Observable, Subscription } from 'rxjs';
+import { defer, Observable, ObservableInput, Subscription } from 'rxjs';
 
 const sortedMergeMap = <I, O>(
   mapper: (outterValue: I, index: number) => ObservableInput<O>,
   concurrent = 1
 ) => (source$: Observable<I>) =>
   new Observable<O>(observer => {
+    let topCompleted = false;
     const queues = new Map<number, Observable<O>>();
     const innerSubscriptions = new Map<number, Subscription>();
     const results = new Map<number, O[]>();
@@ -15,7 +16,12 @@ const sortedMergeMap = <I, O>(
 
     const nextSubscription = () => {
       const inner$ = queues.get(subscriptionIdx);
-      if (!inner$) return;
+      if (!inner$) {
+        if (topCompleted && innerSubscriptions.size === 0) {
+          observer.complete();
+        }
+        return;
+      }
       const idx = subscriptionIdx++;
       queues.delete(idx);
       if (observerIdx !== idx) {
@@ -24,7 +30,7 @@ const sortedMergeMap = <I, O>(
       innerSubscriptions.set(
         idx,
         inner$.subscribe({
-          next(x) {
+          next(x: O) {
             if (observerIdx === idx) {
               observer.next(x);
             } else {
@@ -46,22 +52,33 @@ const sortedMergeMap = <I, O>(
             }
             nextSubscription();
           },
-          error(e) {
+          error(e: any) {
             observer.error(e);
           },
         })
       );
     };
 
-    const topSubscription = source$.subscribe(outterValue => {
-      const idx = mapperIdx++;
-      queues.set(
-        idx,
-        defer(() => mapper(outterValue, idx))
-      );
-      if (innerSubscriptions.size < concurrent) {
-        nextSubscription();
-      }
+    const topSubscription = source$.subscribe({
+      next(outterValue: I) {
+        const idx = mapperIdx++;
+        queues.set(
+          idx,
+          defer(() => mapper(outterValue, idx))
+        );
+        if (innerSubscriptions.size < concurrent) {
+          nextSubscription();
+        }
+      },
+      error(e: any) {
+        observer.error(e);
+      },
+      complete() {
+        topCompleted = true;
+        if (innerSubscriptions.size === 0) {
+          observer.complete();
+        }
+      },
     });
 
     return () => {
